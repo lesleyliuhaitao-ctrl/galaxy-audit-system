@@ -1,0 +1,2 @@
+n_holdout_40,n_flipped_to_acm,flip_fraction,mean_best_margin_shift,median_best_margin_shift,best_scale_mode,n_best_scale_0p70,n_best_scale_0p85,n_best_scale_1p00,n_best_scale_1p15,n_best_scale_1p30
+40,9,0.225,81.96573357966365,5.0279575696257055,1.3,3,0,9,0,28

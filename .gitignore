@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+dev-server.log
+*.tsbuildinfo
+
+repro_core/.compile_check/
+repro_core/acm_audit_repro/__pycache__/
