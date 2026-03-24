@@ -15,7 +15,9 @@
 [What This Repo Does](#-what-this-repo-does--这个仓库做什么) ·
 [Evidence](#-evidence--证据主干) ·
 [Quick Start](#-quick-start--快速开始) ·
+[Deployment](#-deployment--github-pages-部署) ·
 [Reproducibility](#-reproducibility--可复现结构) ·
+[Citation](#-citation--引用方式) ·
 [Data](#-data--数据与证据包) ·
 [Relation to ACM_Project](#-relation-to-acm_project--与主研究仓库的关系)
 
@@ -64,6 +66,7 @@ This repository contains two layers:
    - retained galaxy-side ACM trunk used by the second paper
    - scripts for exporting the frontend bundle
    - curated evidence package for the pathology audit
+   - archived audit scripts for the paper's main procedural chain
 
 本仓库包含两层：
 
@@ -143,6 +146,9 @@ galaxy-audit-system/
   src/                 # frontend source
   public/data/         # exported frontend data bundle
   repro_core/          # minimal reproducible ACM trunk for paper 2
+    scripts/
+      audit_pipeline/  # paper-II audit-chain script snapshots
+      archive_operators/ # archived no-new-parameter operator tests
   data/evidence/       # curated public evidence package
   README.md
   EVIDENCE_SCOPE.md
@@ -155,6 +161,8 @@ Key locations:
 - `src/`: frontend application source
 - `public/data/`: generated JSON bundle consumed by the frontend
 - `repro_core/`: reproducible retained galaxy trunk and export scripts
+- `repro_core/scripts/audit_pipeline/`: research-script snapshots for the paper's main audit chain
+- `repro_core/scripts/archive_operators/`: archived operator tests referenced by the appendices
 - `data/evidence/core/`: curated evidence files used by the second paper
 - `EVIDENCE_SCOPE.md`: what is included publicly and why
 - `DATA_SCHEMA.md`: exported frontend bundle schema
@@ -214,6 +222,33 @@ npm run build
 
 ---
 
+## Deployment | GitHub Pages 部署
+
+This repository is configured for GitHub Pages deployment from the
+`main` branch via GitHub Actions.
+
+Pages assumptions:
+
+- repository name: `galaxy-audit-system`
+- Vite base path: `/galaxy-audit-system/`
+- output directory: `dist/`
+
+To publish:
+
+1. Enable **GitHub Pages** in repository settings.
+2. Choose **GitHub Actions** as the source.
+3. Push to `main`, or trigger the workflow manually.
+
+如果未来改为自定义域名或更换仓库名，需要同步修改：
+
+- `vite.config.ts` 中的 `base`
+- GitHub Pages 的仓库设置
+
+At the current stage, the repository is ready for Pages publication once the
+public release is turned on.
+
+---
+
 ## Reproducibility | 可复现结构
 
 This repository is intentionally reproducible without mirroring the entire
@@ -224,12 +259,32 @@ What is preserved here:
 - the retained galaxy-side ACM trunk used by paper 2
 - the scripts that export the frontend bundle
 - the curated evidence package needed to reproduce the audit logic
+- the archived paper-II audit scripts that generated the main pathology,
+  distance-edge, stellar-normalization, hard31, and operator-archive outputs
 
 What is **not** mirrored here:
 
 - every exploratory branch in `ACM_Project`
 - the full cosmology-side archive
-- failed operator families and all intermediate experiments
+- every intermediate table or temporary branch from the research workspace
+
+## Reproducibility Tiers | 可复现层级
+
+This repository now exposes three reproducibility tiers:
+
+1. **Frontend tier**
+   - the bilingual audit terminal under `src/` and `public/data/`
+2. **Stable trunk tier**
+   - the retained ACM galaxy trunk under `repro_core/acm_audit_repro/`
+3. **Audit-process tier**
+   - the paper-II script snapshots under:
+     - `repro_core/scripts/audit_pipeline/`
+     - `repro_core/scripts/archive_operators/`
+
+The third tier is included so that the procedural audit described in the paper
+can be inspected directly rather than inferred only from exported tables. These
+scripts are preserved as research snapshots. They are meant to expose the audit
+logic and provenance chain even where further cleanup may still be desirable.
 
 本仓库的原则是：在可复现的前提下，避免把完整研究厨房整体搬进来。
 
@@ -306,3 +361,8 @@ manuscript and acknowledge the SPARC data source where applicable.
 
 如果你使用本仓库，请引用对应的 ACM 第二篇论文，并在适用情况下注明 SPARC
 数据来源。
+
+Repository metadata for citation managers is provided in:
+
+- `CITATION.cff`
+- `LICENSE`

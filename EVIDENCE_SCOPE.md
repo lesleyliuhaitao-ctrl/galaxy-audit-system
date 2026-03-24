@@ -15,6 +15,8 @@ public audit narrative:
 - stellar-normalization (`M/L`) audit outputs
 - hard31 gas-shape and geometry audit outputs
 - raw `Vgas` spectrum comparison outputs
+- the script snapshots that generate the main paper-II audit chain
+- the archived operator scripts referenced by Appendix A
 
 ## Excluded From Core Evidence
 
@@ -33,5 +35,6 @@ The public second-paper codebase should expose:
 - the stable retained galaxy trunk
 - the audit evidence tables used in the paper
 - the frontend bundle generation path
+- the audit-process scripts needed to understand how those tables were produced
 
 without turning into a dump of the entire research kitchen.

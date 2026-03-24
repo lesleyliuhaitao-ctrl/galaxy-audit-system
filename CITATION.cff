@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the repository and the accompanying Paper II manuscript."
+title: "Galaxy Audit System"
+type: software
+authors:
+  - family-names: "Liu"
+    given-names: "Haitao"
+    name-particle: ""
+    affiliation: "Independent Researcher, Shanghai, China"
+repository-code: "https://github.com/lesleyliuhaitao-ctrl/galaxy-audit-system"
+url: "https://github.com/lesleyliuhaitao-ctrl/galaxy-audit-system"
+license: "MIT"
+version: "0.1.0"
+date-released: "2026-03-25"
+keywords:
+  - "ACM"
+  - "MOND"
+  - "SPARC"
+  - "galaxy rotation curves"
+  - "residual pathology"
+  - "audit frontend"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Liu"
+      given-names: "Haitao"
+      affiliation: "Independent Researcher, Shanghai, China"
+  title: "ACM Forensic Audit of MOND-Favored Galaxies: Residual Pathologies in the SPARC Sample"
+  journal: "Preprint"
+  year: 2026
+  notes: "See the manuscript in ACM_Project/papers/02_cosmology_transport_closure and the public audit repository for the reproducible interface and evidence package."

@@ -44,6 +44,10 @@ and match the active stable galaxy trunk used for the audit frontend export.
   - regenerates `public/data/*.json`
 - `scripts/sync_core_evidence.py`
   - copies the curated evidence subset from `ACM_Project/research_assets/`
+- `scripts/audit_pipeline/`
+  - archived script snapshots for the paper-II main audit chain
+- `scripts/archive_operators/`
+  - archived no-new-parameter operator tests referenced by the appendices
 - `requirements.txt`
   - minimal Python dependencies
 - `TRUNK_SNAPSHOT.json`
@@ -71,3 +75,21 @@ python repro_core/scripts/export_frontend_bundle.py
 
 This package is intentionally galaxy-side only.
 It does not duplicate the cosmology trunk.
+
+## Audit Script Snapshots
+
+The second paper does not rely only on the retained trunk and exported tables.
+It also depends on a sequence of procedural audit scripts that produced the
+distance-edge, stellar-normalization, hard31, topology, and archived-operator
+results discussed in the manuscript.
+
+Those scripts are now preserved in two folders:
+
+- `scripts/audit_pipeline/`
+- `scripts/archive_operators/`
+
+These are included as provenance-preserving research snapshots. Some of them
+still reflect the original research-workspace layout and may require path
+cleanup for fully standalone execution, but they are kept here so that the
+public repository exposes the actual audit process rather than only its final
+tables.
