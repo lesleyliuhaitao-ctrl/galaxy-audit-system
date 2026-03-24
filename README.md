@@ -14,6 +14,7 @@
 [Scope](#-scope--项目定位) ·
 [What This Repo Does](#-what-this-repo-does--这个仓库做什么) ·
 [Evidence](#-evidence--证据主干) ·
+[Paper Snapshot](#-paper-snapshot--论文快照) ·
 [Quick Start](#-quick-start--快速开始) ·
 [Deployment](#-deployment--github-pages-部署) ·
 [Reproducibility](#-reproducibility--可复现结构) ·
@@ -67,6 +68,7 @@ This repository contains two layers:
    - scripts for exporting the frontend bundle
    - curated evidence package for the pathology audit
    - archived audit scripts for the paper's main procedural chain
+   - manuscript snapshot for the current paper-II release
 
 本仓库包含两层：
 
@@ -139,6 +141,34 @@ It includes:
 
 ---
 
+## Paper Snapshot | 论文快照
+
+The repository also carries a `paper/` snapshot of the current second-paper
+manuscript release, including:
+
+- `paper/main.tex`
+- `paper/main.pdf`
+- `paper/references.bib`
+- `paper/EVIDENCE_INDEX.md`
+
+This keeps the public audit interface, the reproducible code path, and the
+current manuscript state in one place while the paper is still being refined.
+
+本仓库同时附带第二篇论文当前版本的 `paper/` 快照，包括：
+
+- `paper/main.tex`
+- `paper/main.pdf`
+- `paper/references.bib`
+- `paper/EVIDENCE_INDEX.md`
+
+这样在论文仍在继续润色期间，公开仓库中也能同时保留：
+
+- 交互式审计界面
+- 可复现代码路径
+- 当前手稿状态
+
+---
+
 ## Repo Layout | 仓库结构
 
 ```text
@@ -146,6 +176,7 @@ galaxy-audit-system/
   src/                 # frontend source
   public/data/         # exported frontend data bundle
   repro_core/          # minimal reproducible ACM trunk for paper 2
+  paper/               # current paper-II manuscript snapshot
     scripts/
       audit_pipeline/  # paper-II audit-chain script snapshots
       archive_operators/ # archived no-new-parameter operator tests
@@ -161,6 +192,7 @@ Key locations:
 - `src/`: frontend application source
 - `public/data/`: generated JSON bundle consumed by the frontend
 - `repro_core/`: reproducible retained galaxy trunk and export scripts
+- `paper/`: current manuscript snapshot for Paper II
 - `repro_core/scripts/audit_pipeline/`: research-script snapshots for the paper's main audit chain
 - `repro_core/scripts/archive_operators/`: archived operator tests referenced by the appendices
 - `data/evidence/core/`: curated evidence files used by the second paper

@@ -1,0 +1,582 @@
+﻿\documentclass[aps,prd,twocolumn,superscriptaddress,longbibliography,nofootinbib,floatfix]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{iftex}
+\usepackage{xcolor}
+\ifXeTeX
+  \usepackage{fontspec}
+  \setmainfont{Times New Roman}
+  \IfFontExistsTF{Microsoft YaHei}{
+    \newfontfamily\zhnamefont{Microsoft YaHei}
+  }{
+    \newfontfamily\zhnamefont{SimSun}
+  }
+  \newcommand{\zhname}{{\zhnamefont 刘海涛}}
+\else
+  \newcommand{\zhname}{刘海涛}
+\fi
+
+\begin{document}
+
+\title{ACM Forensic Audit of MOND-Favored Galaxies:\\Residual Pathologies in the SPARC Sample}
+
+\author{Liu Haitao / \zhname}
+\affiliation{Independent Researcher, Shanghai, China}
+\email{lesleyliuhaitao@hotmail.com}
+
+\date{\today}
+
+\begin{abstract}
+We present an ACM-based forensic audit of the galaxies that appear to favor
+MOND in the SPARC sample. The purpose of the paper is not to introduce yet
+another replacement function or empirical low-acceleration curve. It is to ask
+whether the MOND-favored regime represents a unified, stable, and reproducible
+physical mechanism, or whether it is better understood as a mixed residual
+regime shaped jointly by observational and modeling conventions. Paper II
+therefore adopts the retained ACM galaxy trunk established in Paper I and
+shifts the focus from global model comparison to full-sample residual
+pathology in SPARC~\cite{LelliMcGaughSchombert2016SPARC}.
+
+Under a single ACM baseline applied to 164 comparison objects, the ACM-better
+systems form the dominant physical cloud, whereas the MOND-favored minority
+does not behave like a coherent dynamical counterexample. Instead, it separates
+into three distinct mechanisms: a geometry-sensitive subset that flips under
+distance-edge stress tests; a stellar-normalization-sensitive subset recoverable
+under conservative stellar mass-to-light rescaling; and a hard31 subset whose
+outer gas distributions are unusually flat, extended, and structure-poor. This
+decomposition suggests that the MOND-favored regime is better interpreted as a
+set of residual mechanisms stabilized under historical limitations, rather than
+as a unified physical stronghold.
+
+The claim of this paper is not that earlier researchers committed deliberate
+errors. MOND's historical success was real and important as an empirical
+low-acceleration framework~\cite{Milgrom1983MOND,FamaeyMcGaugh2012}. Our claim is
+instead that, under earlier distance systems, stellar-normalization practices,
+and low-structure outer-disk regimes, a local threshold law could absorb
+multiple residual structures and thereby stabilize an interpretively
+overfit-friendly observational regime. We do not declare a final verdict on
+behalf of future data. We argue, however, that harder distance anchors, more stable stellar
+mass normalization, and higher-resolution outer-disk measurements will
+continue to arbitrate the interpretation of these regimes.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Starting from the unified trunk of Paper I}
+
+The ACM galaxy-dynamics trunk is not introduced here for the first time.
+Paper I defined the retained galaxy trunk, including the unified constant
+family, the local background-response chain, the propagation-layer logic, and
+the global matched-sample performance of the stable trunk~\cite{Liu2026PaperI}\footnote{Paper I preprint: \href{https://doi.org/10.5281/zenodo.19163963}{Zenodo DOI}. Code repository: \href{https://github.com/lesleyliuhaitao-ctrl/anchor-collapse-model.git}{anchor-collapse-model}.}. More
+importantly, Paper I fixed the methodological discipline that Paper II
+continues to follow: failed objects are retained rather than erased by
+per-galaxy patches, and explanatory power is not purchased by post hoc degrees
+of freedom.
+
+Paper II therefore does not take on the task of re-deriving the first
+principles of the ACM galaxy trunk. All ACM calculations, residual
+classifications, and regime audits in this paper are performed on top of the
+single baseline already established in Paper I. The question here is not
+whether ACM works globally in the first place. The follow-up question is more
+specific: once a unified ACM baseline has been fixed, what does it mean that a
+minority of systems still appears to favor MOND? Do these systems form a
+coherent physical counterexample, or do they instead compress several distinct
+bias channels and fragile regimes into what only looks like a stable MOND
+stronghold?
+
+\subsection{From model comparison to residual pathology}
+
+Comparisons between ACM and MOND can easily remain at a coarse level: which
+model has the lower median residual, which model wins on more galaxies, and
+which model follows the low-acceleration empirical curve more closely. Such
+comparisons are useful, but they do not answer the specific question pursued in
+this paper. Once a minority of systems appears MOND-favored, repeating that ACM
+is globally stronger does not by itself explain what these galaxies actually
+represent.
+
+This paper therefore shifts the object of study from simple model competition
+to residual pathology. We do not treat the MOND-favored subset as a naturally
+unified counterexample class. We treat it instead as a set of residual regimes
+that must be audited: are these systems geometry-locked, stellar
+normalization-biased, or so flat in their outer gas structure that any trunk
+relying on local structural activation is driven into an information-poor
+regime? In that sense, the central product of this paper is a full-sample
+pathology map rather than a ranked win--loss table. This shift is motivated
+not only by ACM's retained baseline, but also by the observational framing
+established by SPARC~\cite{LelliMcGaughSchombert2016SPARC}, MOND
+phenomenology~\cite{FamaeyMcGaugh2012}, and the radial-acceleration
+literature~\cite{McGaughLelliSchombert2016RAR}.
+
+This shift carries a deeper consequence. The aim here is not to put MOND on
+trial as a historical actor. MOND's historical success was real. It provided a
+courageous local approximation and, for a long period, served as a bridge
+between low-acceleration observations and theoretical tension. What this paper
+audits is how that local success became stabilized under historical
+conditions, and how its structural limits emerge once the sample is examined at
+higher residual resolution. It is in this restricted methodological sense that
+we use the word \emph{overfitting}: not to suggest subjective manipulation, but
+to describe a regime-dependent structure stabilized under historical
+observational conditions.
+
+\section{Audit Philosophy and Unified ACM Baseline}
+
+\subsection{Why a unified baseline matters}
+
+All analyses in this paper are built on the stable galaxy trunk established in
+Paper I~\cite{Liu2026PaperI}. In practice this means that we do not refit ACM
+freely on a galaxy-by-galaxy basis, nor do we introduce new free parameters in
+order to rescue a small stubborn subset. We deliberately place ACM in a strict,
+unified, and reproducible audit posture: one trunk function, one constant
+family, and one local-response chain applied across the full comparison sample.
+
+The purpose of this choice is not simply parameter economy. It is to prevent
+Paper II from collapsing back into empirical curve chasing. The goal is not to
+show that ACM can also behave like an old-style fitter with enough targeted
+adjustments. Rather, the goal is to test how stable the purported MOND-favored
+regime really is. If a subset remains MOND-favored only so long as the distance
+scale stays soft, the stellar mass normalization stays flexible, or the source
+family remains within a particular observational regime, then that apparent
+loyalty to MOND must itself become an audit object.
+
+\subsection{The four audit actions}
+
+To pursue this question, Paper II uses four mutually reinforcing audit actions.
+The first is the \emph{distance-edge test}, in which the adopted distance is
+shifted within its quoted uncertainty, $D \pm e_D$, and the verdict response is
+measured. The second is the \emph{stellar normalization scan}, in which the
+stellar mass-to-light ratio is varied within a conservative and astrophysically
+interpretable range. The third is the \emph{outer-gas-shape diagnostic}, which
+uses outer-disk gas slope, curvature, and persistence to identify systems whose
+local structural signal is intrinsically weak. The fourth is the \emph{source-
+and-family audit}, which tests whether distance-source families, reference
+chains, and observational regimes couple systematically to the residual
+mechanisms. These audit actions are motivated by the status of SPARC mass
+models~\cite{LelliMcGaughSchombert2016SPARC}, the LSB rotation-curve
+literature~\cite{McGaughRubinDeBlok2001}, stellar mass-normalization
+practice~\cite{BellDeJong2001}, and the distinction between soft and hard
+distance anchors such as the TRGB method~\cite{MadoreMagerFreedman2009}.
+
+All four actions share the same principle: none of them attempts to smuggle a
+new free parameter into the ACM trunk. The audit target is the sample and the
+interpretive regime, not the invention of a new decorative patch.
+
+The comparison sample itself is not newly defined in Paper II. The 164-object
+set used throughout this audit is the same matched comparison set inherited
+from Paper I, with the same inclusion criteria and the same object-level
+baseline used for direct ACM--MOND comparison. Paper II therefore changes the
+mode of analysis, not the underlying sample definition.
+
+\subsection{From 62 to 22 / 9 / 31}
+
+The decomposition of the MOND-favored minority was not obtained by subjective
+inspection. It emerged from a clear audit sequence. First, the unified trunk
+was applied to the 164-object comparison sample, yielding an initial split into
+102 ACM-better systems and 62 MOND-favored systems. Second, the 62-object
+subset was subjected to the distance-edge test. Twenty-two of these systems
+flip back to ACM under edge shifts, and the flips occur overwhelmingly on the
+$D + e_D$ side. The first audit layer therefore removes a geometry-sensitive
+subset from the supposed MOND stronghold. The full object-level audit table for
+this inherited comparison set is released with the evidence package associated
+with Paper II.
+
+Third, the remaining holdout systems were subjected to a conservative stellar
+mass-normalization scan. Within the residual 40-object pool, nine systems
+return to ACM under plausible $M/L$ adjustments. Only after these first two
+filters does the final hard31 subset emerge. The three mechanisms discussed in
+this paper are therefore not preconceived labels; they are the outcome of a
+stepwise sequence of distance-prior audit, stellar-normalization audit, and
+outer-structure/source-regime audit.
+
+\subsection{Minimal mathematical definitions}
+
+Although this paper does not re-derive the ACM trunk, the audit procedure must
+remain mathematically reproducible. All comparisons in this paper inherit the
+unified retained trunk of Paper I, whose dynamical closure is written as
+\begin{equation}
+g_{\mathrm{ACM}}(r)=g_{\mathrm{bar}}(r)+\frac{2}{3}c^2\eta_{\mathrm{local}}(r),
+\end{equation}
+where $g_{\mathrm{bar}}(r)$ is the baryonic acceleration and
+$\eta_{\mathrm{local}}(r)$ is the retained local background-response field from
+Paper I~\cite{Liu2026PaperI}. Paper II does not repeat the first-principles
+derivation of $\eta_{\mathrm{local}}$; it inherits it as part of the single
+audit baseline.
+
+On top of that baseline, only a few additional mathematical definitions are
+introduced. The distance-edge test is implemented as
+\begin{equation}
+D_{\mathrm{new}} = D \pm e_D,
+\end{equation}
+with radius and baryonic components rescaled consistently under the shifted
+distance. The stellar normalization audit is written as
+\begin{equation}
+\Upsilon_\star \rightarrow s\,\Upsilon_\star,
+\end{equation}
+where $s$ is restricted to a conservative and astrophysically interpretable
+range.
+
+For the hard31 structural audit, the relevant quantities are not new dynamical
+equations but diagnostic structure measures. The outer-disk gas slope is
+defined by
+\begin{equation}
+S_{\mathrm{gas}}(r)=\left|\frac{d\ln(V_{\mathrm{gas}}^2)}{d\ln r}\right|,
+\end{equation}
+and the outer-disk gas curvature by
+\begin{equation}
+C_{\mathrm{gas}}(r)=\left|\frac{d^2\ln(V_{\mathrm{gas}}^2)}{d(\ln r)^2}\right|.
+\end{equation}
+These quantities are not treated as new corrective theory terms. They are used
+as structural fingerprints that distinguish systems with genuinely weak local
+structure from systems that remain information-rich but dynamically difficult.
+
+\section{Global Residual Pathology Map}
+
+\subsection{The 164-object pathology atlas}
+
+To move from anecdotal cases to sample-level structure, the full 164-object
+comparison sample is projected into a residual pathology map. The result is
+clear. The ACM-better 102 do not form a marginal survival group; they form the
+dominant physical cloud of the sample. By contrast, the MOND-favored minority
+does not behave like a single physical family. It separates into three
+distinct mechanisms.
+
+The geometry-hostage 22 occupy the high-distance-error corner and are enriched
+in soft distance sources. The stellar-hostage 9 inhabit the low-stellar-light,
+gas-rich sector, but can be restored by conservative stellar mass
+normalization. The gas-flat hard31 form a low-structure regime characterized by
+flat outer gas profiles, weak curvature, high outer persistence, and the
+absence of hard geometric distance anchors. In simple numerical terms, the
+sample becomes 164 objects decomposed into 102 ACM-better systems and 62
+apparent MOND-favored systems, which in turn separate into 22 geometry
+hostages, 9 stellar hostages, and 31 hard31 judges.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.95\textwidth]{../../research_assets/derived_exports/full_sample_residual_pathology_map.png}
+\caption{
+Full-sample residual pathology map for the 164-object comparison set. The
+ACM-better cloud serves as the primary physical trunk, while the three
+MOND-favored residual regimes---geometry hostages, stellar hostages, and
+gas-flat hard31---are isolated for forensic auditing.
+}
+\label{fig:pathology-map}
+\end{figure*}
+
+\subsection{A four-quadrant verdict}
+
+The four-quadrant pathology map yields a clear verdict. In the geometry plane,
+the geometry-hostage 22 cluster in the high-error sector and are the only class
+that shows a systematic verdict reversal under $D+e_D$. In the mass/baryon
+plane, both the stellar-hostage 9 and the gas-flat hard31 occupy
+low-stellar-light, gas-rich territory, but only the former return under
+conservative $M/L$ recovery. In the outer-gas-shape plane, the hard31
+concentrate in the low-slope, low-curvature, high-persistence corner. They are
+not gas-free systems. They are systems whose gas support is too flat, too
+extended, and too poor in local structure to provide strong local feedback.
+
+The importance of the pathology map is that it dissolves the MOND-favored
+region into multiple residual mechanisms. The subsequent sections are therefore
+not arbitrary case studies; they are successive unfoldings of the full-sample
+pathology map.
+
+\section{Geometry Hostages}
+
+The distance-edge test produces one of the sharpest signals in the paper.
+Among the 62 MOND-favored systems, 22 flip to ACM once the distance is moved to
+the edge of the quoted uncertainty range. These reversals occur overwhelmingly
+on the $D + e_D$ side rather than symmetrically on both sides. The median
+relative distance error of this subset is approximately $24.96\%$, and its
+internal fraction of $f_D=1$ systems is about $77.3\%$, both substantially
+above the level of the dominant sample cloud.
+
+These signals support a simple interpretation: the geometry-hostage 22 are not
+natural MOND victories. They are systems whose verdict is being locked by the
+current geometric scale. Their apparent MOND advantage does not require a new
+dynamical regime. It requires only a slightly compressed distance prior capable
+of holding a local threshold law in an artificially favorable position. In that
+sense, they are better interpreted as geometry problems than as dynamics
+problems.
+
+\section{Stellar Hostages}
+
+The second audit layer reveals a smaller subset with strong sensitivity to
+stellar mass normalization. When the remaining holdout systems are scanned
+under conservative $M/L$ rescaling, 9 of the 40 return to ACM. The most common
+recovery scale appears on the higher but still plausible end of the allowed
+range. These systems therefore do not require a new dynamical law. They behave
+instead like systems that have been held on the MOND-favored side by a weak
+stellar normalization anchor, consistent with the long-standing ambiguity in
+disk-galaxy mass-to-light estimates~\cite{BellDeJong2001}.
+
+This class shares a low-stellar-light, gas-rich background with the hard31, but
+it does not share the same pathology. The stellar-hostage 9 are not entirely
+structure-poor. Their key feature is that they are especially sensitive to the
+normalization of the stellar component. They are therefore closer to
+recoverable normalization bias than to a genuinely separate low-acceleration
+dynamical regime.
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../../research_assets/derived_exports/pathology_geometry_hostages_focus.png}
+\vspace{0.4em}
+
+\small\textbf{Left: Geometry-hostage audit.}
+Focused audit of the 22 systems that return to ACM under distance-edge stress
+tests. The systematic flip on the $D+e_D$ side identifies these objects as
+geometric artifacts rather than dynamical outliers.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../../research_assets/derived_exports/pathology_stellar_hostages_focus.png}
+\vspace{0.4em}
+
+\small\textbf{Right: Stellar-hostage audit.}
+Recovery trajectory for the 9 stellar-normalization-sensitive systems. Orange
+points mark the initial MOND-favored states; blue triangles denote their
+return to the ACM baseline after conservative $M/L$ auditing.
+\end{minipage}
+\caption{
+Sequential audit of the recoverable MOND-favored subsets. The left panel
+isolates the geometry-sensitive systems removed by the distance-edge test,
+whereas the right panel isolates the stellar-normalization-sensitive systems
+recovered under conservative $M/L$ auditing.
+}
+\label{fig:recoverable-subsets}
+\end{figure*}
+
+\section{The hard31 as Internal Audit Judges}
+
+The status of the gas-flat hard31 is categorically different from that of the
+first two groups. These 31 systems were not initially selected as ammunition
+against MOND. They were first used as an internal ACM audit benchmark. In
+other words, the first suspicion was not that the data were biased, but that
+the ACM trunk might still be missing a sufficiently natural, as-yet-unmerged
+correction.
+
+For precisely that reason, the hard31 became the most severe test set. A series
+of physically natural and zero-new-parameter operator variations was explored:
+first-gradient schemes, second-curvature schemes, diffusion accumulation terms,
+self-shielding terms, and nonlinear impedance couplings. The associated raw
+experimental notes and archived negative trials will be released
+progressively as research records at an appropriate stage. The issue is not
+that these ideas were directionless. The issue is that none of them
+materially changed the fate of the hard31. They were either too weakly
+activated or only produced small perturbations. None was sufficient to bring
+the systems back across the verdict boundary.
+
+More importantly, the hard31 exhibit a coherent set of quantitative
+fingerprints. Their number of hard geometric anchors is zero ($f_D=5=0$). Their
+mean outer gas slope is approximately $1.12$, their mean outer gas curvature is
+approximately $3.96$, and their mean outer-to-inner gas persistence ratio is
+approximately $5.95$. In mechanical terms, such systems are close to an
+``idle-running'' state: the outer disk is so flat, extended, and poor in
+structure that insufficient structural variation remains to generate stable
+feedback. Any model that depends on local-response activation will therefore
+enter a weak-coupling regime here. For that reason, the hard31 do not resemble
+a simple pile of bad points. They instead define a class of soft-source,
+low-anchor, low-structure systems occupying a special observational regime.
+
+This is the turning point of the paper. Once all naturally favorable ACM-side
+operator modifications fail systematically, the problem is forced to move from
+``what function is still missing from the model'' to ``whether the input system
+itself carries historical bias.'' This is why the hard31 deserve the name
+\emph{judges}. They are neither MOND's hostages nor ACM's enemies. They are the
+methodological subset that forces the audit to move from trunk-side ornament to
+input-side diagnosis.
+
+The positive role of the hard31 is reinforced by their source topology. Their
+reference-family audit shows that they do not inhabit a hard geometric control
+group. They remain concentrated in softer source regimes and lack hard distance
+anchors entirely. This does not by itself prove input-side bias, but it does
+establish a strong regime-level audit concern. In that sense, hard31 is better
+treated not as a clean MOND fortress but as a soft-source observational island
+that must remain in the main text rather than being relegated to supplementary
+material.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{../../research_assets/derived_exports/pathology_hard31_focus.png}
+\caption{
+Pathological fingerprinting of the hard31 subset. The subpanels isolate the
+low-slope, high-persistence outer-gas regime, demonstrating that these systems
+occupy a structure-poor observational blind spot.
+}
+\label{fig:hard31-structure}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{../../research_assets/derived_exports/hard31_reference_topology.png}
+\caption{
+Distribution of the hard31 subset within source-regime space. The concentration
+in softer reference families and the lack of hard geometric anchors support the
+interpretation of hard31 as a data-regime island rather than a unified physical
+counterexample.
+}
+\label{fig:hard31-topology}
+\end{figure*}
+
+\section{Discussion}
+
+Taken together, the results support a restrained but sharp reinterpretation:
+the MOND-favored regime should no longer be discussed as a unified physical
+stronghold. It behaves more like a distance--mass--model trap, or more broadly
+like an overfit-friendly observational regime stabilized under historical
+conditions.
+
+This interpretation should not be read as an accusation of deliberate error.
+MOND's historical success was real. Under the observational conditions of its
+time, it provided a highly insightful local approximation and helped drive the
+field's re-engagement with low-acceleration phenomena. The point of the present
+audit is different. When the distance source is softer, the stellar mass
+normalization more flexible, and the outer disk flatter and poorer in local
+structure, a local threshold law can absorb several distinct residual
+structures and compress them into an apparently unified success region.
+
+In that sense, \emph{overfitting} is not used here as a moral category. Nor is
+it meant in the narrow sense of a merely over-parameterized fit. It is a
+methodological diagnosis at the interpretive and regime level. It describes a
+structure in which multiple residual regimes that should not belong to the same
+dynamical category become compressed, aligned, and stabilized under historical
+observational conditions. The audit of the 22, the 9, and the 31 is precisely
+the process of decomposing this stabilized overfit regime.
+
+\section{Conclusion}
+
+This paper is not written as a final declaration. We do not claim that ACM has
+already conquered all low-acceleration systems, nor do we reduce MOND's
+historical role to an erroneous episode. What the paper does establish is that
+the interpretive authority of the supposed MOND stronghold can no longer rest
+on a single label. It must instead be redistributed across distinct residual
+mechanisms: geometry-locking, stellar-normalization bias, and low-structure
+outer-gas regimes.
+
+The main conclusion is therefore not ``who has already won.'' It is that
+future discussions of the MOND-favored regime cannot be based on fit quality
+alone. They must first pass through audits of distance, mass normalization,
+outer structure, and source regime. The contribution of Paper II is to define
+that objective audit framework.
+
+This also means that harder distance anchors, more stable stellar mass
+normalization, and higher-resolution outer-gas structure observations will do
+more than supplement the present paper. They will continue to arbitrate the
+interpretive ownership of these regimes. The hard31 in particular should not be
+treated as a safe harbor for MOND, but as priority targets for future
+higher-resolution observations and harder geometric distance determinations. We
+do not pronounce a verdict in advance on behalf of future data. The present
+audit nevertheless suggests that, as those data become harder, discussion of
+the MOND-favored regime will become progressively less sustainable at the level
+of surface fit quality alone and progressively more dependent on unified
+baselines, residual pathology, and regime-level audit.
+
+\section{Objective Validation Paths for Future Observations}
+
+If the conclusions of this paper are to enter a genuinely reproducible phase,
+future work should not remain at the level of swapping empirical fit curves. It
+should instead proceed along three objectively higher-resolution paths. The
+first is harder distance anchoring. Systems that remain in soft distance-source
+regimes and exhibit strong step-like verdict responses under $D+e_D$ should be
+prioritized for TRGB, Cepheid, maser, or comparable hard geometric distance
+measurements~\cite{MadoreMagerFreedman2009}. The purpose is not to privilege
+any theory in advance, but to stabilize the geometric coordinate system itself.
+
+The second is more stable stellar mass normalization. Systems with low
+$L_{3.6}$, high gas-to-light ratios, and strong sensitivity under conservative
+$M/L$ scans should be re-examined under tighter stellar-population, color, and
+evolutionary constraints. The purpose is to reduce the phase space that can be
+absorbed by flexible normalization. The third is higher-resolution outer-disk
+structure measurement. For hard31-like systems---low slope, low curvature, high
+outer persistence, and no hard geometric anchor---the priority is not another
+local corrective function. The priority is improved H\,I outer-disk
+structure, more reliable inclination fields, and better constraints on
+outer-disk asymmetry.
+
+The paper therefore closes not with a demand that future observers accept a
+particular theoretical conclusion, but with a validation program that any
+position should accept. First harden the distance scale. Then stabilize the
+stellar normalization. Then complete the outer-disk structural information.
+Any theory that wishes to continue treating the MOND-favored regime as a
+unified physical stronghold should first be required to pass through those same
+higher-resolution audit channels.
+
+\section{Data and Code Availability}
+
+The theoretical baseline used in this paper is inherited from Paper~I, whose
+preprint is available via \href{https://doi.org/10.5281/zenodo.19163963}{Zenodo DOI}
+and whose public code repository is available at
+\href{https://github.com/lesleyliuhaitao-ctrl/anchor-collapse-model.git}{anchor-collapse-model}. The
+public release associated with the present paper, including the bilingual audit
+frontend, the retained paper-II reproducible core, the curated evidence
+package, and the archived audit-process scripts, is prepared at
+\href{https://github.com/lesleyliuhaitao-ctrl/galaxy-audit-system.git}{galaxy-audit-system}. At the
+time of writing, this second repository is being prepared for public release
+and is intended to serve as the public codebase for the audit layer developed
+in Paper~II. It is also intended to host an interactive audit interface as a
+public-facing visual companion to the present manuscript. The final public web
+entry point will be added upon publication release.
+
+\appendix
+
+\section{Archived Audit Operators}
+
+To prevent the main text from being overwhelmed by exploratory corrections,
+we do not merge the full operator archive into the narrative body of the
+paper. This omission should not be read as methodological irrelevance. On the
+contrary, the hard31 subset acquires its status as a methodological judge
+because a sequence of physically motivated, no-new-parameter operators was
+tested against it and archived.
+
+At minimum, this archive includes first-gradient corrections,
+second-curvature corrections, diffusion-accumulation terms,
+self-shielding terms, and nonlinear diffusion--shielding impedance
+couplings. All of them obey the same retained-trunk discipline: no
+per-galaxy freedom, no ad hoc rescue parameter, and no abandonment of the
+unified baseline. In each case the question is simple. Can a physically
+natural modification materially alter the hard31 verdict without compromising
+the stability of the ACM-better majority?
+
+The archive verdict is clearer than any one operator formula considered in
+isolation. The tested operators were either too weakly activated to change
+the hard31 classification, or they produced only marginal perturbations while
+preserving global trunk safety. Their significance therefore lies not in
+having nearly succeeded, but in forming a reproducible body of negative
+results. This negative body of evidence moves the audit away from the repeated
+search for one more elegant local function and toward the diagnosis of
+historical bias on the input and regime sides.
+
+In the final public form of the paper, the closed expressions, quantitative
+summaries, and archive verdicts of these operators can be documented in a
+longer appendix or linked research archive. For the present manuscript, it is
+sufficient to note that the hard31 subset remained stable against a broad
+family of no-new-parameter ACM-side rescue attempts. That stability is part
+of the reason the subset functions as a methodological judge rather than a
+generic collection of residual outliers.
+
+\section{Supplementary Regime Diagnostics}
+
+Not every diagnostic figure belongs in the main text. Some are more useful as
+exclusionary evidence or regime-audit evidence than as headline figures. In
+particular, the raw $V_{\mathrm{gas}}$ spectrum comparison between hard31 and
+the ACM-better majority is retained primarily to clarify what the hard31
+subset is \emph{not}. It is not merely a visibly fabricated frequency regime.
+Nor is it reducible to a trivial smoothing artifact.
+
+Likewise, the distance-family summary tables, ranked distance-edge response
+lists, stellar-normalization sensitivity tables, and the hard31 geometry
+audit summary remain important to reproducibility even when they do not serve
+as the central visual anchors of the paper. Their function is not to amplify
+the rhetoric of the main text. Their function is to keep the paper's
+stronger claims traceable to explicit procedural audits. They can then be
+checked item by item by external readers.
+
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+
+\end{document}
