@@ -149,6 +149,67 @@ function Chart({
   );
 }
 
+function FitEvidenceChart({
+  selected,
+  lang,
+}: {
+  selected: GalaxyRecord;
+  lang: Lang;
+}) {
+  const t = copy[lang];
+  const maxCpp = Math.max(selected.acmCpp, selected.mondCpp, 1);
+  const deltaCpp = selected.mondCpp - selected.acmCpp;
+
+  const rows = [
+    {
+      label: t.legendAcm,
+      value: selected.acmCpp,
+      color: "#dd614a",
+      winner: selected.acmCpp < selected.mondCpp,
+    },
+    {
+      label: t.legendMond,
+      value: selected.mondCpp,
+      color: "#4ea699",
+      winner: selected.mondCpp < selected.acmCpp,
+    },
+  ];
+
+  return (
+    <div className="chart-block">
+      <div className="chart-head">
+        <h3>{t.popularEvidenceTitle}</h3>
+        <div className="chart-range">{t.popularLowerBetter}</div>
+      </div>
+      <p className="chart-note">{t.popularEvidenceNote}</p>
+      <div className="fit-evidence-grid">
+        {rows.map((row) => (
+          <div key={row.label} className={row.winner ? "fit-evidence-row winner" : "fit-evidence-row"}>
+            <div className="fit-evidence-topline">
+              <span className="fit-evidence-label">
+                <span className="legend-dot" style={{ background: row.color }} />
+                {row.label}
+              </span>
+              <strong>{row.value.toFixed(2)}</strong>
+            </div>
+            <div className="fit-evidence-track">
+              <div
+                className="fit-evidence-fill"
+                style={{ width: `${(row.value / maxCpp) * 100}%`, background: row.color }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="fit-evidence-summary">
+        {deltaCpp >= 0
+          ? `${t.legendAcm} ${t.popularBeats} ${t.legendMond} by ${deltaCpp.toFixed(2)} CPP.`
+          : `${t.legendMond} ${t.popularBeats} ${t.legendAcm} by ${Math.abs(deltaCpp).toFixed(2)} CPP.`}
+      </div>
+    </div>
+  );
+}
+
 function scatterPoints(
   points: PathologyPoint[],
   xKey: keyof PathologyPoint,
@@ -340,18 +401,7 @@ function PopularView({
             </div>
           </div>
 
-          {/* chart */}
-          <Chart
-            title={t.popularChartTitle}
-            note={t.popularChartNote}
-            xLabel={t.axisRadius}
-            yLabel={t.axisVelocity}
-            series={[
-              { label: t.legendObserved, color: "#f4f1de", values: adjusted.obs },
-              { label: t.legendAcm, color: "#dd614a", values: adjusted.acm },
-              { label: t.legendMond, color: "#4ea699", values: adjusted.mond },
-            ]}
-          />
+          <FitEvidenceChart selected={selected} lang={lang} />
         </div>
       </div>
     </div>
