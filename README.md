@@ -2,22 +2,23 @@
 
 ## The Public Audit Terminal for the ACM vs MOND Forensics Paper
 
-**Not a generic dashboard. Not a casual demo. A bilingual evidence terminal for auditing where ACM wins, where MOND appears to win, and why those regions are not all the same.**
+**One retained baseline. One residual minority. The evidence comes first.**
 
-**不是普通 dashboard，也不是随手做的展示页，而是一套面向 ACM vs MOND 第二篇论文的双语证据审计终端。**
+**一条保留基线，一组残差少数派，先把证据摆出来。**
 
 > A clean public release of the second paper's interactive audit layer.  
 > 一个面向第二篇论文公开发布的交互式审计层代码库。
 
 ## Primary Evidence | 首要证据
 
-This figure is the signature evidence of Paper II. The `Residual Pathology Map`
-shows that the apparent MOND-favored minority is not a single coherent
-counterexample class. It decomposes into geometry hostages, stellar hostages,
-and the hard31 structure-poor outer-disk regime. This is the point of the
-audit: once the residual minority is separated into its actual mechanisms, the
-same retained ACM baseline remains effective without inventing a new rescue
-function for each pathological case.
+This figure is the first thing a reader should see, because it is the
+signature evidence of Paper II. The `Residual Pathology Map` shows that the
+apparent MOND-favored minority is not a single coherent counterexample class.
+It decomposes into geometry hostages, stellar hostages, and the hard31
+structure-poor outer-disk regime. This is the point of the audit in its
+cleanest form: once the residual minority is separated into its actual
+mechanisms, the same retained ACM baseline remains effective without inventing
+a new rescue function for each pathological case.
 
 这张图就是 Paper II 最关键的证据。`Residual Pathology Map` 直接显示：那些看
 似偏向 MOND 的少数样本，并不是一个统一、连贯的反例群，而是被拆解为几何人
