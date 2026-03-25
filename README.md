@@ -15,6 +15,7 @@
 [What This Repo Does](#-what-this-repo-does--这个仓库做什么) ·
 [Evidence](#-evidence--证据主干) ·
 [Paper Snapshot](#-paper-snapshot--论文快照) ·
+[Paper Figures](#-paper-figures--论文主图) ·
 [Quick Start](#-quick-start--快速开始) ·
 [Deployment](#-deployment--github-pages-部署) ·
 [Reproducibility](#-reproducibility--可复现结构) ·
@@ -166,6 +167,43 @@ current manuscript state in one place while the paper is still being refined.
 - 交互式审计界面
 - 可复现代码路径
 - 当前手稿状态
+
+---
+
+## Paper Figures | 论文主图
+
+The main figure set used by the current paper-II manuscript is also exposed
+directly in this repository as standalone image assets under
+`data/evidence/core/`.
+
+当前第二篇论文正文使用的主图，也已经作为独立图片文件直接放在本仓库的
+`data/evidence/core/` 中。
+
+### Figure 1 | Full-Sample Pathology Map
+
+![Full-Sample Pathology Map](data/evidence/core/full_sample_residual_pathology_map.png)
+
+### Figure 2 | Geometry Hostages Focus
+
+![Geometry Hostages Focus](data/evidence/core/pathology_geometry_hostages_focus.png)
+
+### Figure 3 | Stellar Hostages Focus
+
+![Stellar Hostages Focus](data/evidence/core/pathology_stellar_hostages_focus.png)
+
+### Figure 4 | hard31 Structure Focus
+
+![hard31 Structure Focus](data/evidence/core/pathology_hard31_focus.png)
+
+### Figure 5 | hard31 Reference Topology
+
+![hard31 Reference Topology](data/evidence/core/hard31_reference_topology.png)
+
+These figure files are the same public evidence-layer assets used to support
+the current manuscript snapshot under `paper/`.
+
+这些图片文件与 `paper/` 目录中的当前手稿快照相互对应，构成第二篇论文的
+公开证据图层。
 
 ---
 
