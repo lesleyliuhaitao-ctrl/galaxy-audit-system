@@ -17,6 +17,7 @@ export type Verdict = "acm" | "mond" | "ambiguous";
 export interface GalaxyRecord {
   id: string;
   displayName: string;
+  pathologyGroup?: "acm_better_102" | "geom_hostage_22" | "stellar_hostage_9" | "gas_flat_hard31";
   winner: Verdict;
   confidence: "high" | "medium" | "fragile";
   primarySensitivity: "distance" | "inclination" | "shape-depth" | "mass-normalization";

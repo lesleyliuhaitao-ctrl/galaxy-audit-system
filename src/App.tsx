@@ -15,6 +15,10 @@ const tagOptions: PathologyTag[] = [
   "stellar-hostage",
 ];
 
+type QuickGroup = "all-164" | "acm-102" | "geometry-22" | "stellar-9" | "hard31";
+
+const quickGroupOrder: QuickGroup[] = ["all-164", "acm-102", "geometry-22", "stellar-9", "hard31"];
+
 function humanizeTag(tag: PathologyTag | "all", t: Record<string, string>) {
   const map: Record<PathologyTag | "all", string> = {
     all: t.tag_all,
@@ -26,6 +30,39 @@ function humanizeTag(tag: PathologyTag | "all", t: Record<string, string>) {
     "stellar-hostage": t.tag_stellarHostage,
   };
   return map[tag];
+}
+
+function inferPathologyGroup(galaxy: GalaxyRecord) {
+  if (galaxy.pathologyGroup) return galaxy.pathologyGroup;
+  if (galaxy.pathologyTags.includes("stellar-hostage")) return "stellar_hostage_9";
+  if (galaxy.pathologyTags.includes("gas-flat")) return "gas_flat_hard31";
+  if (
+    galaxy.pathologyTags.includes("distance-sensitive") ||
+    galaxy.pathologyTags.includes("geometry-fragile")
+  ) {
+    return "geom_hostage_22";
+  }
+  return galaxy.winner === "acm" ? "acm_better_102" : undefined;
+}
+
+function matchesQuickGroup(galaxy: GalaxyRecord, quickGroup: QuickGroup) {
+  const pathologyGroup = inferPathologyGroup(galaxy);
+  switch (quickGroup) {
+    case "all-164":
+      return true;
+    case "acm-102":
+      return pathologyGroup === "acm_better_102";
+    case "geometry-22":
+      return pathologyGroup === "geom_hostage_22";
+    case "stellar-9":
+      return pathologyGroup === "stellar_hostage_9";
+    case "hard31":
+      return pathologyGroup === "gas_flat_hard31";
+  }
+}
+
+function isHard31(galaxy: GalaxyRecord) {
+  return inferPathologyGroup(galaxy) === "gas_flat_hard31";
 }
 
 type PathologyPoint = {
@@ -247,23 +284,28 @@ function PathologyMiniMap({
   points,
   xKey,
   yKey,
+  lowSignal,
+  lowSignalLabel,
 }: {
   title: string;
   subtitle: string;
   points: PathologyPoint[];
   xKey: keyof PathologyPoint;
   yKey: keyof PathologyPoint;
+  lowSignal?: boolean;
+  lowSignalLabel?: string;
 }) {
   const width = 220;
   const height = 118;
   const dots = scatterPoints(points, xKey, yKey, width, height);
 
   return (
-    <div className="mini-map">
+    <div className={lowSignal ? "mini-map low-signal-zone" : "mini-map"}>
       <div className="mini-map-head">
         <h3>{title}</h3>
         <p>{subtitle}</p>
       </div>
+      {lowSignal && <div className="zone-badge">{lowSignalLabel}</div>}
       <svg viewBox={`0 0 ${width} ${height}`} className="mini-map-svg" role="img">
         {[0.25, 0.5, 0.75].map((f) => (
           <line key={`h-${f}`} x1="0" y1={height * f} x2={width} y2={height * f} className="grid-line" />
@@ -279,6 +321,99 @@ function PathologyMiniMap({
   );
 }
 
+function QuickNav({
+  active,
+  setActive,
+  lang,
+}: {
+  active: QuickGroup;
+  setActive: (group: QuickGroup) => void;
+  lang: Lang;
+}) {
+  const t = copy[lang];
+  return (
+    <section className="quick-nav">
+      <div className="panel-header">{t.quickNavTitle}</div>
+      <div className="quick-nav-row">
+        {quickGroupOrder.map((group) => (
+          <button
+            key={group}
+            className={active === group ? "tag active" : "tag"}
+            onClick={() => setActive(group)}
+          >
+            {t[`quick_${group}`]}
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DistanceAuditFeedback({
+  selected,
+  distanceScale,
+  lang,
+}: {
+  selected: GalaxyRecord;
+  distanceScale: number;
+  lang: Lang;
+}) {
+  const t = copy[lang];
+  const sigmaRel = Math.min(selected.distanceErrorMpc / Math.max(selected.distanceMpc, 1e-6), 0.15);
+  const lower = Math.max(0.85, 1 - sigmaRel);
+  const upper = Math.min(1.15, 1 + sigmaRel);
+  const leftPct = ((lower - 0.85) / 0.3) * 100;
+  const widthPct = ((upper - lower) / 0.3) * 100;
+  const markerPct = ((upper - 0.85) / 0.3) * 100;
+  const flippedToAcm =
+    inferPathologyGroup(selected) === "geom_hostage_22" &&
+    selected.winner === "mond" &&
+    distanceScale >= 1 &&
+    distanceScale <= upper;
+
+  return (
+    <div className="distance-audit-block">
+      <div className="distance-audit-rail">
+        <div className="distance-audit-band" style={{ left: `${leftPct}%`, width: `${widthPct}%` }} />
+        <div className="distance-audit-marker" style={{ left: `${markerPct}%` }} />
+      </div>
+      <div className="distance-audit-caption">
+        <span>{t.distanceAuditBand}</span>
+        <span>
+          {lower.toFixed(2)}x - {upper.toFixed(2)}x
+        </span>
+      </div>
+      {flippedToAcm && (
+        <div className="audit-status flipped">
+          <span className="status-dot" />
+          {t.statusFlippedAcm}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LowSignalNotice({ lang }: { lang: Lang }) {
+  return <div className="low-signal-notice">{copy[lang].lowSignalNotice}</div>;
+}
+
+function CitePanel({ lang }: { lang: Lang }) {
+  const t = copy[lang];
+  return (
+    <section className="cite-panel">
+      <a
+        className="primary-btn cite-btn"
+        href="https://github.com/lesleyliuhaitao-ctrl/galaxy-audit-system/blob/main/paper/main.pdf"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {t.citePaper}
+      </a>
+      <div className="cite-note">{t.citeComingSoon}</div>
+    </section>
+  );
+}
+
 // ── Popular (simple) view ────────────────────────────────────────────────────
 function PopularView({
   galaxies,
@@ -287,7 +422,6 @@ function PopularView({
   setSelectedId,
   query,
   setQuery,
-  adjusted,
   lang,
 }: {
   galaxies: GalaxyRecord[];
@@ -296,17 +430,10 @@ function PopularView({
   setSelectedId: (id: string) => void;
   query: string;
   setQuery: (q: string) => void;
-  adjusted: { obs: number[]; acm: number[]; mond: number[] };
   lang: Lang;
 }) {
   const t = copy[lang];
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return galaxies.filter(
-      (g) => !q || g.displayName.toLowerCase().includes(q) || g.id.toLowerCase().includes(q),
-    );
-  }, [galaxies, query]);
+  const filtered = galaxies;
 
   const confidenceText =
     selected.confidence === "high"
@@ -391,6 +518,7 @@ function PopularView({
             </div>
             <p className="popular-confidence-text">{confidenceText}</p>
             <div className="popular-sensitivity-pill">{sensitivityText}</div>
+            {isHard31(selected) && <LowSignalNotice lang={lang} />}
             <div className="popular-tags">
               {selected.pathologyTags.map((tag) => (
                 <div key={tag} className="popular-tag-row">
@@ -404,6 +532,8 @@ function PopularView({
           <FitEvidenceChart selected={selected} lang={lang} />
         </div>
       </div>
+
+      <CitePanel lang={lang} />
     </div>
   );
 }
@@ -418,6 +548,7 @@ export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>("popular");
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<PathologyTag | "all">("all");
+  const [activeQuickGroup, setActiveQuickGroup] = useState<QuickGroup>("all-164");
   const [selectedId, setSelectedId] = useState(mockGalaxies[0].id);
   const [mode, setMode] = useState<AuditMode>("official");
   const [showResiduals, setShowResiduals] = useState(true);
@@ -446,11 +577,19 @@ export default function App() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return galaxies.filter((galaxy) => {
+      const quickPass = matchesQuickGroup(galaxy, activeQuickGroup);
       const tagPass = activeTag === "all" || galaxy.pathologyTags.includes(activeTag);
       const queryPass = !q || galaxy.displayName.toLowerCase().includes(q) || galaxy.id.toLowerCase().includes(q);
-      return tagPass && queryPass;
+      return quickPass && tagPass && queryPass;
     });
-  }, [activeTag, galaxies, query]);
+  }, [activeQuickGroup, activeTag, galaxies, query]);
+
+  useEffect(() => {
+    if (!filtered.length) return;
+    if (!filtered.some((g) => g.id === selectedId)) {
+      setSelectedId(filtered[0].id);
+    }
+  }, [filtered, selectedId]);
 
   const selected =
     filtered.find((g) => g.id === selectedId) ??
@@ -479,15 +618,31 @@ export default function App() {
       galaxies.find((g) => g.pathologyTags.includes("distance-sensitive")) ??
       galaxies.find((g) => g.pathologyTags.includes("MOND-resistant")) ??
       galaxies[0];
-    if (flagged) { setSelectedId(flagged.id); setActiveTag("all"); setQuery(""); }
+    if (flagged) {
+      setSelectedId(flagged.id);
+      setActiveQuickGroup("all-164");
+      setActiveTag("all");
+      setQuery("");
+    }
   };
 
   const handleBrowseAll = () => {
     setViewMode("expert");
+    setActiveQuickGroup("all-164");
     setActiveTag("all");
     setQuery("");
     atlasRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const handleQuickGroup = (group: QuickGroup) => {
+    setActiveQuickGroup(group);
+    setActiveTag("all");
+    setQuery("");
+    const next = galaxies.find((galaxy) => matchesQuickGroup(galaxy, group)) ?? galaxies[0];
+    if (next) setSelectedId(next.id);
+  };
+
+  const lowSignalFocus = activeQuickGroup === "hard31" || isHard31(selected);
 
   return (
     <div className="app-shell">
@@ -525,15 +680,16 @@ export default function App() {
         </div>
       </header>
 
+      <QuickNav active={activeQuickGroup} setActive={handleQuickGroup} lang={lang} />
+
       {viewMode === "popular" ? (
         <PopularView
-          galaxies={galaxies}
+          galaxies={filtered}
           selected={selected}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           query={query}
           setQuery={setQuery}
-          adjusted={adjusted}
           lang={lang}
         />
       ) : (
@@ -547,8 +703,24 @@ export default function App() {
             <div className="mini-map-grid">
               <PathologyMiniMap title={t.geometryPlaneTitle} subtitle={t.geometryPlaneSubtitle} points={pathologyPoints} xKey="distanceRelErrPct" yKey="deltaCppMondMinusAcm" />
               <PathologyMiniMap title={t.massPlaneTitle} subtitle={t.massPlaneSubtitle} points={pathologyPoints} xKey="l36" yKey="gasToLightProxy" />
-              <PathologyMiniMap title={t.gasShapeTitle} subtitle={t.gasShapeSubtitle} points={pathologyPoints} xKey="outerGasSlope" yKey="outerToInnerGasRatio" />
-              <PathologyMiniMap title={t.spectrumPlaneTitle} subtitle={t.spectrumPlaneSubtitle} points={pathologyPoints} xKey="outerGasCurvature" yKey="vgasHighFreqPowerFrac" />
+              <PathologyMiniMap
+                title={t.gasShapeTitle}
+                subtitle={t.gasShapeSubtitle}
+                points={pathologyPoints}
+                xKey="outerGasSlope"
+                yKey="outerToInnerGasRatio"
+                lowSignal={lowSignalFocus}
+                lowSignalLabel={t.lowSignalZone}
+              />
+              <PathologyMiniMap
+                title={t.spectrumPlaneTitle}
+                subtitle={t.spectrumPlaneSubtitle}
+                points={pathologyPoints}
+                xKey="outerGasCurvature"
+                yKey="vgasHighFreqPowerFrac"
+                lowSignal={lowSignalFocus}
+                lowSignalLabel={t.lowSignalZone}
+              />
             </div>
           </section>
 
@@ -557,11 +729,24 @@ export default function App() {
               <div className="panel-header">{t.selectorTitle}</div>
               <input className="search-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t.search} />
               <div className="tag-row">
-                <button className={activeTag === "all" ? "tag active" : "tag"} onClick={() => setActiveTag("all")}>
+                <button
+                  className={activeTag === "all" ? "tag active" : "tag"}
+                  onClick={() => {
+                    setActiveQuickGroup("all-164");
+                    setActiveTag("all");
+                  }}
+                >
                   {humanizeTag("all", t)}
                 </button>
                 {tagOptions.map((tag) => (
-                  <button key={tag} className={activeTag === tag ? "tag active" : "tag"} onClick={() => setActiveTag(tag)}>
+                  <button
+                    key={tag}
+                    className={activeTag === tag ? "tag active" : "tag"}
+                    onClick={() => {
+                      setActiveQuickGroup("all-164");
+                      setActiveTag(tag);
+                    }}
+                  >
                     {humanizeTag(tag, t)}
                   </button>
                 ))}
@@ -615,6 +800,7 @@ export default function App() {
                   <label className="control-block">
                     <span>{t.distanceScale}: {distanceScale.toFixed(2)}x</span>
                     <input type="range" min="0.85" max="1.15" step="0.01" value={distanceScale} onChange={(e) => setDistanceScale(Number(e.target.value))} />
+                    <DistanceAuditFeedback selected={selected} distanceScale={distanceScale} lang={lang} />
                   </label>
                   <label className="control-block">
                     <span>{t.inclination}: {inclinationDelta > 0 ? "+" : ""}{inclinationDelta}°</span>
@@ -641,6 +827,7 @@ export default function App() {
                       <span>{t.currentWinner}</span>
                       <strong className={`winner-text ${selected.winner}`}>{selected.winner.toUpperCase()}</strong>
                     </div>
+                    {isHard31(selected) && <LowSignalNotice lang={lang} />}
                     <div className="verdict-row">
                       <span>{t.sensitivity}</span>
                       <strong>{selected.primarySensitivity}</strong>
@@ -675,6 +862,8 @@ export default function App() {
                     </div>
                   </div>
                 </section>
+
+                <CitePanel lang={lang} />
               </div>
             </section>
           </main>
