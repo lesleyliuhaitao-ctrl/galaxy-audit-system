@@ -3,6 +3,9 @@ import { mockGalaxies } from "./data/mockAudit";
 import { copy } from "./i18n";
 import { AuditMode, GalaxyRecord, Lang, PathologyTag, ViewMode } from "./types";
 
+const dataUrl = (relativePath: string) =>
+  `${import.meta.env.BASE_URL}${relativePath.replace(/^\/+/, "")}`;
+
 const tagOptions: PathologyTag[] = [
   "acm-recovered",
   "distance-sensitive",
@@ -377,7 +380,7 @@ export default function App() {
 
   useEffect(() => {
     let alive = true;
-    fetch("/data/audit-bundle.json")
+    fetch(dataUrl("data/audit-bundle.json"))
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bundle fetch failed"))))
       .then((bundle) => {
         if (!alive || !bundle?.galaxies?.length) return;
