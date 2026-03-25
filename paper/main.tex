@@ -6,6 +6,8 @@
 \usepackage{hyperref}
 \usepackage{iftex}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \ifXeTeX
   \usepackage{fontspec}
   \setmainfont{Times New Roman}
@@ -46,7 +48,8 @@ does not behave like a coherent dynamical counterexample. Instead, it separates
 into three distinct mechanisms: a geometry-sensitive subset that flips under
 distance-edge stress tests; a stellar-normalization-sensitive subset recoverable
 under conservative stellar mass-to-light rescaling; and a hard31 subset whose
-outer gas distributions are unusually flat, extended, and structure-poor. This
+outer gas distributions are unusually flat, extended, and structure-poor, i.e.
+structure-poor outer-disk cases. This
 decomposition suggests that the MOND-favored regime is better interpreted as a
 set of residual mechanisms stabilized under historical limitations, rather than
 as a unified physical stronghold.
@@ -106,7 +109,7 @@ that must be audited: are these systems geometry-locked, stellar
 normalization-biased, or so flat in their outer gas structure that any trunk
 relying on local structural activation is driven into an information-poor
 regime? In that sense, the central product of this paper is a full-sample
-pathology map rather than a ranked win--loss table. This shift is motivated
+Residual Pathology Map rather than a ranked win--loss table. This shift is motivated
 not only by ACM's retained baseline, but also by the observational framing
 established by SPARC~\cite{LelliMcGaughSchombert2016SPARC}, MOND
 phenomenology~\cite{FamaeyMcGaugh2012}, and the radial-acceleration
@@ -169,7 +172,26 @@ The comparison sample itself is not newly defined in Paper II. The 164-object
 set used throughout this audit is the same matched comparison set inherited
 from Paper I, with the same inclusion criteria and the same object-level
 baseline used for direct ACM--MOND comparison. Paper II therefore changes the
-mode of analysis, not the underlying sample definition.
+mode of analysis, not the underlying sample definition. The released
+object-level table for this inherited comparison set is the Paper II audit
+export \texttt{full\_sample\_residual\_pathology\_audit.csv}.
+
+\subsection{Operational distance-quality tiers}
+
+The geometry audit uses the SPARC distance flag $f_D$ as an operational proxy
+for distance quality, but not as a replacement for the original SPARC metadata.
+For the purposes of Paper II, we group the flag values into three audit tiers.
+The \emph{soft or derived tier} consists of $f_D \leq 2$, where the adopted
+distance remains comparatively exposed to derived or soft priors. The
+\emph{intermediate tier} consists of $f_D = 3$, which is rare in the present
+comparison sample. The \emph{hard-anchor tier} consists of $f_D \geq 4$, with
+$f_D = 5$ treated as the strongest geometric-anchor class in the audit. This
+is an operational audit mapping designed to test regime stability under
+distance quality; it is not a redefinition of the SPARC catalog itself. In
+practical observational terms, the hard-anchor language is intended to point
+toward TRGB-, Cepheid-, maser-, or comparably rigid geometric-distance
+regimes, whereas the soft/derived tier captures the classes of distance inputs
+most exposed to indirect or historically softer calibration chains.
 
 \subsection{From 62 to 22 / 9 / 31}
 
@@ -190,7 +212,41 @@ return to ACM under plausible $M/L$ adjustments. Only after these first two
 filters does the final hard31 subset emerge. The three mechanisms discussed in
 this paper are therefore not preconceived labels; they are the outcome of a
 stepwise sequence of distance-prior audit, stellar-normalization audit, and
-outer-structure/source-regime audit.
+outer-structure/source-regime audit. The procedural chain is summarized in
+Fig.~\ref{fig:audit-flow}.
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=1.15cm and 0.9cm,
+  every node/.style={font=\small, align=center},
+  box/.style={draw=black!70, rounded corners=4pt, line width=0.7pt, fill=black!2, inner sep=8pt, text width=0.21\textwidth},
+  verdict/.style={draw=blue!50!black, rounded corners=4pt, line width=0.8pt, fill=blue!4, inner sep=8pt, text width=0.19\textwidth},
+  arrow/.style={-{Latex[length=3mm,width=2mm]}, line width=0.8pt, draw=black!70}
+]
+\node[box] (sample) {164 comparison objects\\under the retained ACM baseline};
+\node[box, right=of sample] (distance) {Distance-edge audit\\$D \pm e_D$\\distance-quality screening};
+\node[verdict, right=of distance] (geom) {22 geometry hostages\\removed from the MOND-favored pool};
+\node[box, below=of distance] (ml) {Conservative stellar-normalization audit\\bounded $M/L$ rescaling};
+\node[verdict, right=of ml] (stellar) {9 stellar hostages\\returned to the ACM baseline};
+\node[verdict, left=of ml] (hard31) {31 hard31\\structure-poor outer-disk cases};
+
+\draw[arrow] (sample) -- (distance);
+\draw[arrow] (distance) -- (geom);
+\draw[arrow] (distance) -- (ml);
+\draw[arrow] (ml) -- (stellar);
+\draw[arrow] (ml) -- (hard31);
+\end{tikzpicture}
+\caption{
+Sequential audit flow used in Paper II. The decomposition of the MOND-favored
+minority emerges through explicit filtering stages rather than through post hoc
+relabeling: distance-edge audit first isolates the geometry-hostage subset,
+conservative stellar-normalization audit then isolates the stellar-hostage
+subset, and the residual hard31 regime remains as the final structure-poor
+audit target.
+}
+\label{fig:audit-flow}
+\end{figure*}
 
 \subsection{Minimal mathematical definitions}
 
@@ -217,7 +273,8 @@ distance. The stellar normalization audit is written as
 \Upsilon_\star \rightarrow s\,\Upsilon_\star,
 \end{equation}
 where $s$ is restricted to a conservative and astrophysically interpretable
-range.
+range. In the present audit this window is the same bounded envelope used in
+the derived evidence tables, namely $s \in \{0.7, 0.85, 1.0, 1.15, 1.3\}$.
 
 For the hard31 structural audit, the relevant quantities are not new dynamical
 equations but diagnostic structure measures. The outer-disk gas slope is
@@ -252,13 +309,14 @@ flat outer gas profiles, weak curvature, high outer persistence, and the
 absence of hard geometric distance anchors. In simple numerical terms, the
 sample becomes 164 objects decomposed into 102 ACM-better systems and 62
 apparent MOND-favored systems, which in turn separate into 22 geometry
-hostages, 9 stellar hostages, and 31 hard31 judges.
+hostages, 9 stellar hostages, and 31 hard31 judges---the latter being
+structure-poor outer-disk cases that survive the first two audit layers.
 
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.95\textwidth]{../../research_assets/derived_exports/full_sample_residual_pathology_map.png}
 \caption{
-Full-sample residual pathology map for the 164-object comparison set. The
+Residual Pathology Map for the 164-object comparison set. The
 ACM-better cloud serves as the primary physical trunk, while the three
 MOND-favored residual regimes---geometry hostages, stellar hostages, and
 gas-flat hard31---are isolated for forensic auditing.
@@ -293,13 +351,38 @@ relative distance error of this subset is approximately $24.96\%$, and its
 internal fraction of $f_D=1$ systems is about $77.3\%$, both substantially
 above the level of the dominant sample cloud.
 
+\begin{table}[t]
+\centering
+\small
+\caption{
+Operational distance-quality composition of the geometry-hostage subset
+compared with the ACM-better majority. Here ``soft/derived'' denotes
+$f_D \leq 2$, ``intermediate'' denotes $f_D = 3$, and ``hard-anchor''
+denotes $f_D \geq 4$.
+}
+\label{tab:distance-quality}
+\begin{tabular}{lrrrr}
+\toprule
+Subset & $N$ & Soft/derived & Intermediate & Hard-anchor \\
+\midrule
+Geometry hostages & 22 & 20 & 0 & 2 \\
+ACM-better cloud & 102 & 73 & 2 & 27 \\
+hard31 & 31 & 30 & 0 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 These signals support a simple interpretation: the geometry-hostage 22 are not
 natural MOND victories. They are systems whose verdict is being locked by the
 current geometric scale. Their apparent MOND advantage does not require a new
 dynamical regime. It requires only a slightly compressed distance prior capable
 of holding a local threshold law in an artificially favorable position. In that
 sense, they are better interpreted as geometry problems than as dynamics
-problems.
+problems. In operational distance-quality terms, the geometry-hostage subset is
+concentrated overwhelmingly in the soft or derived tier, contains no
+$f_D = 3$ intermediates, and contains no $f_D = 5$ strongest-anchor systems at
+all. The object-level distance-quality evidence remains traceable in the
+inherited comparison metadata released with the Paper II evidence package.
 
 \section{Stellar Hostages}
 
@@ -310,14 +393,44 @@ recovery scale appears on the higher but still plausible end of the allowed
 range. These systems therefore do not require a new dynamical law. They behave
 instead like systems that have been held on the MOND-favored side by a weak
 stellar normalization anchor, consistent with the long-standing ambiguity in
-disk-galaxy mass-to-light estimates~\cite{BellDeJong2001}.
+disk-galaxy mass-to-light estimates~\cite{BellDeJong2001,LelliMcGaughSchombert2016SPARC}.
+
+\begin{table}[t]
+\centering
+\small
+\caption{
+Recovered stellar-hostage systems under conservative stellar
+mass-to-light rescaling. All nine recovered objects return to the ACM baseline
+at the same upper conservative scale, $s = 1.3$.
+}
+\label{tab:stellar-recovery}
+\begin{tabular}{lrrc}
+\toprule
+Galaxy & Baseline $\Delta\mathrm{CPP}$ & Best $s$ & Returns to ACM \\
+\midrule
+NGC3741  & -7.82   & 1.3 & Yes \\
+F574-1   & -9.82   & 1.3 & Yes \\
+UGC12506 & -10.13  & 1.3 & Yes \\
+NGC1705  & -25.51  & 1.3 & Yes \\
+UGC00731 & -27.33  & 1.3 & Yes \\
+NGC0247  & -43.22  & 1.3 & Yes \\
+NGC2841  & -69.18  & 1.3 & Yes \\
+NGC7814  & -81.39  & 1.3 & Yes \\
+DDO154   & -401.51 & 1.3 & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 This class shares a low-stellar-light, gas-rich background with the hard31, but
 it does not share the same pathology. The stellar-hostage 9 are not entirely
 structure-poor. Their key feature is that they are especially sensitive to the
 normalization of the stellar component. They are therefore closer to
 recoverable normalization bias than to a genuinely separate low-acceleration
-dynamical regime.
+dynamical regime. Importantly, the stellar-normalization audit is not a free
+parameter search. It is a bounded normalization stress test: the recovery is
+restricted to a conservative stellar-population envelope and, in the present
+sample, the recovered cases all converge to the same upper conservative factor
+rather than scattering across arbitrary values.
 
 \begin{figure*}[t]
 \centering
@@ -447,6 +560,15 @@ structure in which multiple residual regimes that should not belong to the same
 dynamical category become compressed, aligned, and stabilized under historical
 observational conditions. The audit of the 22, the 9, and the 31 is precisely
 the process of decomposing this stabilized overfit regime.
+
+For hard31-like systems, the next discriminant is therefore not another
+decorative local function, but a harder observational test. If future data add
+stronger geometric anchors, higher-resolution outer-disk structure, and more
+stable inclination fields, then these systems will no longer be able to remain
+ambiguous on the basis of low-structure smoothness alone. The relevant
+question is not whether a smoother empirical curve can still be drawn, but
+whether the regime continues to resist a unified baseline once the
+observational scaffold itself is hardened.
 
 \section{Conclusion}
 
