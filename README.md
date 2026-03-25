@@ -9,6 +9,24 @@
 > A clean public release of the second paper's interactive audit layer.  
 > 一个面向第二篇论文公开发布的交互式审计层代码库。
 
+## Primary Evidence | 首要证据
+
+This figure is the signature evidence of Paper II. The `Residual Pathology Map`
+shows that the apparent MOND-favored minority is not a single coherent
+counterexample class. It decomposes into geometry hostages, stellar hostages,
+and the hard31 structure-poor outer-disk regime. This is the point of the
+audit: once the residual minority is separated into its actual mechanisms, the
+same retained ACM baseline remains effective without inventing a new rescue
+function for each pathological case.
+
+这张图就是 Paper II 最关键的证据。`Residual Pathology Map` 直接显示：那些看
+似偏向 MOND 的少数样本，并不是一个统一、连贯的反例群，而是被拆解为几何人
+质、恒星人质，以及 `hard31` 这个结构贫瘠的外盘 regime。这也是第二篇审计的
+关键结论：一旦把残差少数派按真实机制拆开，同一个保留 ACM 基线依然有效，
+并不需要为每一种病理个案再发明一个营救函数。
+
+![Primary evidence: Residual Pathology Map](data/evidence/core/full_sample_residual_pathology_map.png)
+
 **Quick Links | 快速导航**
 
 [Scope](#-scope--项目定位) ·
