@@ -1,4 +1,6 @@
-﻿# Galaxy Audit System
+# Galaxy Audit System
+
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=lesleyliuhaitao-ctrl.galaxy-audit-system)
 
 ## The Public Audit Terminal for the ACM vs MOND Forensics Paper
 
