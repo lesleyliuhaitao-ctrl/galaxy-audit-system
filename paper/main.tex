@@ -1,9 +1,21 @@
-﻿\documentclass[aps,prd,twocolumn,superscriptaddress,longbibliography,nofootinbib,floatfix]{revtex4-2}
+﻿\documentclass[aps,prd,twocolumn,superscriptaddress,longbibliography,nofootinbib,floatfix,10pt]{revtex4-2}
 
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\makeatletter
+\let\ACM@PackageWarning\PackageWarning
+\def\PackageWarning#1#2{%
+  \def\ACM@warnpkg{#1}%
+  \def\ACM@namerefpkg{nameref}%
+  \ifx\ACM@warnpkg\ACM@namerefpkg
+  \else
+    \ACM@PackageWarning{#1}{#2}%
+  \fi
+}
 \usepackage{hyperref}
+\let\PackageWarning\ACM@PackageWarning
+\makeatother
 \usepackage{iftex}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -325,7 +337,10 @@ absence of hard geometric distance anchors. In simple numerical terms, the
 sample becomes 164 objects decomposed into 102 ACM-better systems and 62
 apparent MOND-favored systems, which in turn separate into 22 geometry
 hostages, 9 stellar hostages, and 31 hard31 judges---the latter being
-structure-poor outer-disk cases that survive the first two audit layers.
+structure-poor outer-disk cases that survive the first two audit layers. A
+subsequent rigid-trunk audit leaves this 102/22/9/31 layering unchanged,
+showing that the pathology map is not an artifact of a softer engineering
+realization.
 
 \begin{figure*}[!t]
 \centering
