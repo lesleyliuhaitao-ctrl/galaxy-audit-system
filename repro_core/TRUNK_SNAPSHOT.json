@@ -1,16 +1,16 @@
 {
   "source_project": "ACM_Project",
-  "snapshot_date": "2026-03-23",
+  "snapshot_date": "2026-03-29",
   "stable_galaxy_trunk": {
     "eta_base": 1e-29,
-    "beta_density": 4.199484386503164e-28,
-    "beta_bg": 7.788726810199519e-29,
-    "lambda_sup": 0.16901528439936672,
+    "beta_density": 4.220349186054929e-28,
+    "beta_bg": 7.56705328360024e-29,
+    "lambda_sup": 0.1689888140144467,
     "mond_a0": 1.2e-10
   },
   "notes": [
     "Snapshot created for the second paper public audit codebase.",
-    "Galaxy-side trunk is kept aligned with the first-paper stable mainline.",
-    "This snapshot preserves the slope-adaptive L_eff version of the galaxy trunk."
+    "Galaxy-side trunk is now aligned with the audited rigid-baseline mainline.",
+    "This snapshot preserves the retained rigid-trunk galaxy baseline used after the 2026-03-29 forensic audit."
   ]
 }
